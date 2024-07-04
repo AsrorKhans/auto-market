@@ -1,0 +1,23 @@
+$activeLinkColor: #2181E8;
+$mainBgColor: #F5F5F5;
+$mainTextColor: #707070;
+
+
+:root {
+  --mainBgColor: $activeLinkColor;
+  --activeLinkColor: $mainBgColor;
+  --mainTextColor: $mainTextColor
+}
+
+* {
+
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
