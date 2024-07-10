@@ -4,7 +4,6 @@ import { useParams } from 'react-router-dom';
 const CarDetailInfo = () => {
   const params = useParams();
   const { id, car } = params;
-  console.log('params', params);
   return (
     <>
       <ul>

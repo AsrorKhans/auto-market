@@ -5,7 +5,6 @@ import { useEffect } from 'react';
 export const HeaderComponent = () => {
   const location = useLocation();
   useEffect(() => {}, [location.pathname]);
-  console.log('location', location);
   return (
     <header className={'header-component '}>
       <div className={'main-container'}>
