@@ -1,11 +1,21 @@
 import { ICars, ICarsList } from '@shared/types/ICars.ts';
 import { Button, Table } from 'antd';
-import { useLocation, useNavigate } from 'react-router-dom';
+import { modalWindow } from '@shared/ui/modal';
+import { UpdatePriceFormBySearchParams } from '@/features/update-price';
+import React from 'react';
 
-export const FakeDataTable = (props: ICarsList) => {
-  const navigate = useNavigate();
-  const location = useLocation();
-  const { cars, bankName } = props;
+type Props = {
+  data: ICarsList;
+};
+export const PriceListTable = (props: Props) => {
+  const { cars, bankName } = props.data;
+  const openUpdatePriceWindow = (data: ICars) => {
+    modalWindow({
+      content: (
+        <UpdatePriceFormBySearchParams data={data} bankName={bankName} />
+      ),
+    });
+  };
   const columns = [
     {
       title: 'ID',
@@ -30,10 +40,7 @@ export const FakeDataTable = (props: ICarsList) => {
     {
       title: '',
       render: (text: ICars) => (
-        <Button
-          type={'primary'}
-          onClick={() => navigate(location.pathname + '/' + text.id)}
-        >
+        <Button type={'primary'} onClick={() => openUpdatePriceWindow(text)}>
           Изменить
         </Button>
       ),

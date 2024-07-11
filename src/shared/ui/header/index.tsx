@@ -1,10 +1,16 @@
-import { NavLink, useLocation } from 'react-router-dom';
+import { NavLink, useLocation, useNavigate } from 'react-router-dom';
 import './styles.scss';
 import { useEffect } from 'react';
+import { PAGE_ROUTES } from '@shared/constants/route-constants.ts';
 
 export const HeaderComponent = () => {
   const location = useLocation();
-  useEffect(() => {}, [location.pathname]);
+  const navigate = useNavigate();
+  useEffect(() => {
+    if (location.pathname === '/' || location.pathname === '') {
+      navigate('/' + PAGE_ROUTES.CATALOG);
+    }
+  }, [location.pathname]);
   return (
     <header className={'header-component '}>
       <div className={'main-container'}>
@@ -19,7 +25,7 @@ export const HeaderComponent = () => {
                     ? 'active-navbar-link'
                     : 'nav-link'
               }
-              to={'/'}
+              to={'/' + PAGE_ROUTES.CATALOG}
             >
               Главная страница
             </NavLink>
@@ -31,7 +37,7 @@ export const HeaderComponent = () => {
                     ? 'active-navbar-link'
                     : 'nav-link'
               }
-              to={'/calculation'}
+              to={'/' + PAGE_ROUTES.CALCULATION}
             >
               Калькулятор
             </NavLink>
@@ -43,7 +49,7 @@ export const HeaderComponent = () => {
                     ? 'active-navbar-link'
                     : 'nav-link'
               }
-              to={'/update-prices'}
+              to={'/' + PAGE_ROUTES.UPDATE_PRICE}
             >
               Обновить цены
             </NavLink>

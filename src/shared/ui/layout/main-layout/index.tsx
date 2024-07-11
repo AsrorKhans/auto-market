@@ -2,8 +2,8 @@ import React, { ReactNode } from 'react';
 
 import { Layout } from 'antd';
 import { Outlet } from 'react-router-dom';
-import { HeaderComponent } from '@shared/components/header';
-import { FooterComponent } from '@shared/components/footer';
+import { HeaderComponent } from 'src/shared/ui/header';
+import { FooterComponent } from 'src/shared/ui/footer';
 
 type Props = {
   children: ReactNode | ReactNode[];

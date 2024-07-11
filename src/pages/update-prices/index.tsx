@@ -1,20 +1,32 @@
 import { Button, Form, Select } from 'antd';
-import { FakeDataTable } from '@pages/update-prices/fake-data.tsx';
-import { useState } from 'react';
+import React, { useState } from 'react';
 import { BANKS_LIST } from '@shared/constants/banks-list.ts';
 import { RiSearchLine } from '@remixicon/react';
 import { CARS_BRAND, CARS_MODEL } from '@shared/constants/car-names.ts';
-import { ICars, ICarsList } from '@shared/types/ICars.ts';
-import { getCarsListByParams } from '@pages/update-prices/bank-auto-price-list.ts';
+import { ICarsList, IGetCarsListProps } from '@shared/types/ICars.ts';
+import { usePriceListStore } from '@shared/store/update-price';
+import { PriceListTable } from '@pages/update-prices/ui/price-list-table.tsx';
 
 const UpdatePrices = () => {
   const [bankName, setBankName] = useState<BANKS_LIST>(BANKS_LIST.ANORBANK);
-  const [data, setData] = useState<ICarsList>({ cars: [], bankName: '' });
+  const [data, setData] = useState<ICarsList>({
+    cars: [],
+    bankName: BANKS_LIST.ANORBANK,
+  });
   const [form] = Form.useForm();
-  const onFinish = (values: ICars) => {
-    console.log('values', values);
-    setData(getCarsListByParams({ params: values, bankName }));
+  const { updatePrice, bankList, getCarsByParams } = usePriceListStore();
+
+  const getCarsListByParams = (values: IGetCarsListProps) => {
+    const resultData = getCarsByParams(values, bankName);
+    setData(resultData);
+    console.log('resultData', resultData);
+    console.log('data', data);
   };
+  const onFinish = (values: IGetCarsListProps) => {
+    console.log('values', values);
+    getCarsListByParams(values);
+  };
+
   return (
     <div>
       <h2>Обновить цены</h2>
@@ -96,7 +108,7 @@ const UpdatePrices = () => {
         </Button>
       </Form>
 
-      <FakeDataTable {...data} />
+      <PriceListTable data={data} />
     </div>
   );
 };

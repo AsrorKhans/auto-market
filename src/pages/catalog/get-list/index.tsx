@@ -1,11 +1,16 @@
-import React from 'react';
-import { Button, Form, Input } from 'antd';
+import React, { useState } from 'react';
+import { Card, Form } from 'antd';
 import './styles.scss';
 import { useCatalogStore } from '@shared/store/catalog-store';
+import { usePriceListStore } from '@shared/store/update-price';
+import { ICarsList } from '@shared/types/ICars.ts';
+import { Link } from 'react-router-dom';
 
 const GetList: React.FC = () => {
   const { users, setUsers, removeUserById } = useCatalogStore();
+  const { bankList } = usePriceListStore();
   const [form] = Form.useForm();
+  const [carsList, setCarsList] = useState<ICarsList[]>();
   const onFinish = (values: any) => {
     console.log(values);
     const requestedValue = {
@@ -16,88 +21,27 @@ const GetList: React.FC = () => {
     setUsers([...users, requestedValue]);
     form.resetFields();
   };
+
+  console.log('carsList', carsList);
   return (
     <>
       <h2>Каталог</h2>
-      <Form
-        onFinish={onFinish}
-        form={form}
-        layout={'vertical'}
-        style={{ maxWidth: 300 }}
-      >
-        <Form.Item
-          rules={[{ required: true, message: 'Укажите имя пользователя' }]}
-          name={'name'}
-          label={'Имя пользователя'}
-        >
-          <Input placeholder={'Имя пользователя'} />
-        </Form.Item>
-        <Form.Item
-          rules={[{ required: true, message: 'Укажите электронную почту' }]}
-          name={'email'}
-          label={'Email'}
-        >
-          <Input placeholder={'Email'} type={'email'} />
-        </Form.Item>
-        <Form.Item
-          rules={[{ required: true, message: 'Укажите професию' }]}
-          name={'job'}
-          label={'Професия'}
-        >
-          <Input placeholder={'Професия'} />
-        </Form.Item>
-        <Button htmlType={'submit'}>ADD</Button>
-      </Form>
-
-      {users.map((item, index) => (
-        <ul>
-          <li>
-            <strong>{index + 1}</strong>
-          </li>
-          <li key={index}>{item.id}</li>
-          <li key={index}>{item.name}</li>
-          <li key={index}>{item.job}</li>
-        </ul>
-      ))}
-      {/*<div className={'catalog-list-wrapper'}>*/}
-      {/*  {carFakeData.map((item, index) => (*/}
-      {/*    // <Link to={`/catalog/${index}`} key={index} state={{ car: item }}>*/}
-      {/*    <Card*/}
-      {/*      key={index}*/}
-      {/*      title={item.Name.toUpperCase()}*/}
-      {/*      style={{ width: 300 }}*/}
-      {/*      hoverable*/}
-      {/*    >*/}
-      {/*      <ul>*/}
-      {/*        <li>*/}
-      {/*          Миль: <strong>{item.Miles_per_Gallon}</strong>*/}
-      {/*        </li>*/}
-      {/*        <li>*/}
-      {/*          Цилиндры: <strong>{item.Cylinders}</strong>*/}
-      {/*        </li>*/}
-      {/*        <li>*/}
-      {/*          Смещение: <strong>{item.Displacement}</strong>*/}
-      {/*        </li>*/}
-      {/*        <li>*/}
-      {/*          Лошадиные силы: <strong>{item.Horsepower}</strong>*/}
-      {/*        </li>*/}
-      {/*        <li>*/}
-      {/*          Вес в фунтах: <strong>{item.Weight_in_lbs}</strong>*/}
-      {/*        </li>*/}
-      {/*        <li>*/}
-      {/*          Ускорение: <strong>{item.Acceleration}</strong>*/}
-      {/*        </li>*/}
-      {/*        <li>*/}
-      {/*          Год: <strong>{item.Year}</strong>*/}
-      {/*        </li>*/}
-      {/*        <li>*/}
-      {/*          Источник: <strong>{item.Origin}</strong>*/}
-      {/*        </li>*/}
-      {/*      </ul>*/}
-      {/*    </Card>*/}
-      {/*    // </Link>*/}
-      {/*  ))}*/}
-      {/*</div>*/}
+      <div className={'catalog-list-wrapper'}>
+        {bankList!.map((item, index) => {
+          const cars = [...item.cars];
+          return cars.map((car) => (
+            <Link to={`${car.id}`} state={{ car }}>
+              <Card key={index} title={''} style={{ width: 300 }} hoverable>
+                <ul>
+                  <li>Бренд: {car.brandName}</li>
+                  <li>Модел: {car.name} </li>
+                  <li>Цена: {car.price}</li>
+                </ul>
+              </Card>
+            </Link>
+          ));
+        })}
+      </div>
     </>
   );
 };

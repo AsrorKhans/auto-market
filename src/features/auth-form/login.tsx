@@ -1,6 +1,7 @@
 import React from 'react';
 import { Button, Checkbox, Form, FormProps, Input } from 'antd';
 import { useNavigate } from 'react-router-dom';
+import { PAGE_ROUTES } from '@shared/constants/route-constants.ts';
 
 type FieldType = {
   username?: string;
@@ -21,7 +22,7 @@ export const LoginForm = () => {
       form.getFieldValue('username') === 'admin' ||
       form.getFieldValue('password') === 'admin'
     ) {
-      navigate('/');
+      navigate('/' + PAGE_ROUTES.CATALOG);
     }
   };
 

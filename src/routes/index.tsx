@@ -3,7 +3,7 @@ import { Route, Routes } from 'react-router-dom';
 import getCatalogList from '@pages/catalog';
 import { MainLayout } from '@shared/ui/layout/main-layout';
 import GetList from '@pages/catalog/get-list';
-import { LoadingAnimation } from '@shared/components/spinner';
+import { LoadingAnimation } from 'src/shared/ui/spinner';
 import {
   ADMIN_ROUTES,
   AUTH_ROUTES,
@@ -23,7 +23,7 @@ function AppRoutes() {
     <Suspense fallback={<LoadingAnimation />}>
       <Routes>
         <Route path={AUTH_ROUTES.AUTH}>
-          <Route index element={<Login />} />
+          <Route index path={AUTH_ROUTES.LOGIN} element={<Login />} />
           <Route path={AUTH_ROUTES.SIGN_IN} element={<SignIn />} />
           <Route path={AUTH_ROUTES.SIGN_UP} element={<SignUp />} />
         </Route>
@@ -31,7 +31,7 @@ function AppRoutes() {
           <Route index element={<AdminDashboard />} />
         </Route>
         <Route path={PAGE_ROUTES.MAIN} element={<MainLayout />}>
-          <Route index element={<GetList />} />
+          <Route index path={''} element={<GetList />} />
           <Route>{getCatalogList()}</Route>
           <Route path={'calculation'}>
             <Route path={''} element={<Calculation />} />

@@ -20,7 +20,6 @@ import * as XLSX from 'xlsx';
 
 const Calculation: React.FC = () => {
   const [form] = Form.useForm();
-  const [priceRange, setPriceRange] = useState<number>(0);
   const [price, setPrice] = useState(0); // Initial price value
   const minPriceOfCar = 0;
   const maxPriceOfCar = 100000000;

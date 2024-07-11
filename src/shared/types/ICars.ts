@@ -12,6 +12,13 @@ export interface ICarsList {
   cars: ICars[];
 }
 
+export interface IGetCarsListProps {
+  bankName: string;
+  brandName: string;
+  name: string;
+  year: number;
+}
+
 export interface IUser {
   id: number | string;
   name: string;
